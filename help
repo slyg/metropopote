@@ -1,6 +1,0 @@
-Usage: run.sh [OPTIONS]
-
-OPTIONS:
-
--m, --mongod	launch mongodb server
--r, --runapp	launch node app
