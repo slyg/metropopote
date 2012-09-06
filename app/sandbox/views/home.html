@@ -2,15 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    {% block head %}
     <title>Play w/ API</title>
     <link type="text/css" rel="stylesheet" href="http://static2.viadeo-static.com/resource/20120905122533/coreui.css" media="all" />
-    {% endblock %}
-    
 </head>
-<body>
+<body data-route-context="{{ route }}">
 	<div class="pal">
-		<h1>Play w/ API</h1>
+		<h1 class="pll">Play w/ API</h1>
 		<div class="gr">
 			<div class="gu gu-1of2">
 				<ul class="pal">
@@ -29,10 +26,16 @@
 						</form>
 					</li>
 					<li>
+						<form class="core-form well form-inline" action="/api/members" method="get" id="retrieve-all">
+							<label for="retrieve-all-member">Retrieve all : </label>
+							<button type="submit" class="btn btn-primary">Retrieve all members</button>
+						</form>
+					</li>
+					<li>
 						<form class="core-form well form-inline" action="/api/member" method="post" id="update">
-							<label for="name-update">Update :  </label>
-							<input type="text" placeholder="Member ID" name="id" class="input-small" />
-							<input id="name-update" type="text" placeholder="Name" name="name" class="input-small" />
+							<label for="member-id-update">Update :  </label>
+							<input id="member-id-update" type="text" placeholder="Member ID" name="id" class="input-small" />
+							<input type="text" placeholder="Name" name="name" class="input-small" />
 							<input type="hidden" name="_method" value="put" />
 							<button type="submit" class="btn btn-primary">Update member's name</button>
 						</form>
@@ -48,8 +51,10 @@
 				</ul>
 			</div>
 			<div class="gu gu-last">
-				<div class="fr plm"><a href="#" class="btn btn-default btn-small" id="clearlog">clear</a></div>
-				<pre class="pam" id="logger" style="height: 20em; overflow-y:scroll;"></pre>
+				<div style="position: relative;" class="cf">
+					<a href="#" class="btn btn-default btn-small mbm mrxl" id="clearlog" style="position: absolute; bottom: 0; right: 0;">clear</a>
+					<pre class="pam" id="logger" style="height: 20em; overflow-y:scroll; box-shadow: 0px 0px 20px #ddd"></pre>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -74,13 +79,11 @@
 					type : params['_method'] || form.attr('method'),
 					success	: function(res){
 						form[0].reset();
-						window.zz = res;
-						console.log(zz);
-						logger.prepend($.fn.logObj(res));
+						logger.prepend((typeof res == 'object') ? $.fn.logObj(res) : res + '\n\n');
 					}
 				};
 				xhr.url = form.attr('action');
-				if(xhr.type != 'post') xhr.url += '/' + params['id'];
+				if(!(xhr.type == 'post' || form.attr('id') == "retrieve-all")) xhr.url += '/' + params['id'];
 				if(xhr.type == 'post' || xhr.type == 'put') xhr.data = params;
 				
 				// proceed ajax call

@@ -27,7 +27,7 @@ app.configure(function(){
 // Route list
 
 app.get('/', function(req, res) {
-	res.render('home.html');
+	res.render('home.html', {route : app.route});
 });
 
 // Launch http server
