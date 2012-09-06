@@ -11,6 +11,8 @@ var app = module.exports = express();
 // Middleware
 
 app.configure(function(){
+	app.use(express.bodyParser());
+	app.use(express.methodOverride());
 	app.use(app.router);
 	app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
