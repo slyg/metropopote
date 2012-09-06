@@ -1,6 +1,10 @@
 #!/bin/bash
 
-echo There are $# arguments to $0: $*
+# ----------------------------------------------
+# --- Start node app and optionnally mongodb ---
+# ----------------------------------------------
+
+# Test if arguments are passed
 
 hasarg=0
 
@@ -10,8 +14,6 @@ then
 else
 	hasarg=1
 fi
-
-# --- Start node app and optionnally mongodb ---
 
 # Manage options
 
@@ -55,7 +57,6 @@ case $1 in
 
   shift
 done
-
 
 # By default, launch node app if no argument passed
 
