@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    {% block head %}
+    <title>Play w/ API</title>
+    <link type="text/css" rel="stylesheet" href="http://static2.viadeo-static.com/resource/20120905122533/coreui.css" media="all" />
+    {% endblock %}
+    
+</head>
+<body>
+	<div class="pal">
+		<h1>Play w/ API</h1>
+		<div class="gr">
+			<div class="gu gu-1of2">
+				<ul class="pal">
+					<li>
+						<form class="core-form well form-inline" action="/api/member" method="post" id="create">
+							<label for="create-member">Create :  </label>
+							<input id="create-member" type="text" placeholder="Name" class="input-small" name="name" />
+							<button type="submit" class="btn btn-primary">Create member</button>
+						</form>
+					</li>
+					<li>
+						<form class="core-form well form-inline" action="/api/member" method="get" id="retrieve">
+							<label for="retrieve-member">Retrieve : </label>
+							<input id="retrieve-member" type="text" placeholder="Member ID" class="input-small" name="id" />
+							<button type="submit" class="btn btn-primary">Retrieve member</button>
+						</form>
+					</li>
+					<li>
+						<form class="core-form well form-inline" action="/api/member" method="post" id="update">
+							<label for="name-update">Update :  </label>
+							<input type="text" placeholder="Member ID" name="id" class="input-small" />
+							<input id="name-update" type="text" placeholder="Name" name="name" class="input-small" />
+							<input type="hidden" name="_method" value="put" />
+							<button type="submit" class="btn btn-primary">Update member's name</button>
+						</form>
+					</li>
+					<li>
+						<form class="core-form well form-inline" action="/api/member" method="post" id="delete">
+							<label for="delete-member">Delete :  </label>
+							<input id="delete-member" type="text" placeholder="Member ID" name="id" class="input-small" />
+							<input type="hidden" name="_method" value="delete" />
+							<button type="submit" class="btn btn-primary">Delete member</button>
+						</form>
+					</li>
+				</ul>
+			</div>
+			<div class="gu gu-last">
+				<div class="fr plm"><a href="#" class="btn btn-default btn-small" id="clearlog">clear</a></div>
+				<pre class="pam" id="logger" style="height: 20em; overflow-y:scroll;"></pre>
+			</div>
+		</div>
+	</div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script>
+    
+    	(function(){
+    		
+    		var logger = $('#logger');
+    
+	    	$('form').submit(function(e) {
+	    	
+	    		// don't do the stuff you usually do bro
+				e.preventDefault();
+				
+				var form = $(this),
+					params = $.parseJSON(JSON.stringify(form.serializeObject()));
+					
+				// cooking xhr parameters
+				
+				var xhr = {
+					type : params['_method'] || form.attr('method'),
+					success	: function(res){
+						form[0].reset();
+						window.zz = res;
+						console.log(zz);
+						logger.prepend($.fn.logObj(res));
+					}
+				};
+				xhr.url = form.attr('action');
+				if(xhr.type != 'post') xhr.url += '/' + params['id'];
+				if(xhr.type == 'post' || xhr.type == 'put') xhr.data = params;
+				
+				// proceed ajax call
+				
+				$.ajax(xhr);
+				
+			});
+			
+			$('#clearlog').click(function(){
+				logger.empty();
+			});
+	    	
+	  
+			// Utils
+			
+			$.fn.logObj = function(zz){
+				var log = '{\n';
+				$.param(zz).split('&').forEach(function(param){
+				    var params = param.split('=')
+				    log += '\t' + params[0] + ' : ' + params[1] + '\n';
+				});
+				log += '}\n\n';
+				return log;
+			}
+		
+			$.fn.serializeObject = function(){
+			    var o = {};
+			    var a = this.serializeArray();
+			    $.each(a, function() {
+			        if (o[this.name] !== undefined) {
+			            if (!o[this.name].push) {
+			                o[this.name] = [o[this.name]];
+			            }
+			            o[this.name].push(this.value || '');
+			        } else {
+			            o[this.name] = this.value || '';
+			        }
+			    });
+			    return o;
+			};
+		
+		}());
+
+		
+    </script>
+</body>
+</html>
