@@ -18,8 +18,9 @@
 				type : params['_method'] || form.attr('method'),
 				success	: function(res){
 					form[0].reset();
-					logger.prepend((typeof res == 'object') ? $.fn.logObj(res) : res + '\n\n');
-				}
+					logger.prepend('200 : ' + ((typeof res == 'object') ? indentStringified(JSON.stringify(res)) : res) + '\n\n');
+				},
+				error : function(res){ logger.prepend(res.status + ' : ' + res.responseText+ '\n\n'); }
 			};
 			xhr.url = form.attr('action');
 			if(!(xhr.type == 'post' || form.attr('id') == "retrieve-all")) xhr.url += '/' + params['id'];
@@ -39,14 +40,15 @@
 	
 		// Utils
 		
-		$.fn.logObj = function(zz){
-			var log = '{\n';
-			$.param(zz).split('&').forEach(function(param){
-			    var params = param.split('=')
-			    log += '\t' + params[0] + ' : ' + params[1] + '\n';
-			});
-			log += '}\n\n';
-			return log;
+		var indentStringified = function(zz){
+			zz = zz
+				.replace(/{\"/g, "{\n\t\"")
+				.replace(/\},/g, "\n},")
+				.replace(/\",\"/g, "\",\n\t\"")
+				.replace(/}\]/g, "\n}\]")
+				.replace(/},{/g, "},\n{")
+				.replace(/}*$/, "\n}");
+			return zz;
 		}
 	
 		$.fn.serializeObject = function(){
