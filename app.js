@@ -22,7 +22,7 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', function(req, res, next){ res.end('\n\033[35m' + 'REST api working : \n- /api for documentation \n- /sandbox to play' + '\033[0m\n\n'); });
+app.get('/', function(req, res, next){ res.redirect('/sandbox'); });
 app.use('/api', 	require('./app/api/app'));
 app.use('/sandbox', require('./app/sandbox/app'));
 
