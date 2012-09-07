@@ -11,7 +11,7 @@ module.exports = function(app){
 			if (!err) {
 				res.json(members);
 			} else {
-				res.json(err);
+				res.json(500, err);
 			}
 		}); 
 	});
@@ -22,10 +22,10 @@ module.exports = function(app){
 				if(member){
 					res.json(member);
 				} else {
-					res.json({error : "Member doesn't exist"});
+					res.json(404, {error : "Member doesn't exist"});
 				}
 			} else {
-				res.json(err);
+				res.json(500, err);
 			}
 		}); 
 	});
@@ -39,37 +39,41 @@ module.exports = function(app){
 				if(!err) {
 					res.json(member);
 				} else {
-					res.json(err);
+					res.json(500, err);
 				}
 			});
 		} else {
-			res.json({error : "Parameter 'name' is missing"});
+			res.json(500, {error : "Parameter 'name' is missing"});
 		}
 	});
 	
 	
 	app.put('/member/:id', function(req, res, next){
-		Member.findById(req.params.id, function (err, member) {
-			if(!err){
-				if(member){
-					member.name = req.body.name;
-					if(member.name){
-						member.save(function(err){
-							if(!err){
-								res.json(member);
-							} else {
-								res.json(err);
-							}
-						});
+		if(req.params.id){
+			Member.findById(req.params.id, function (err, member) {
+				if(!err){
+					if(member){
+						member.name = req.body.name;
+						if(member.name){
+							member.save(function(err){
+								if(!err){
+									res.json(member);
+								} else {
+									res.json(500, err);
+								}
+							});
+						} else {
+							res.json(500, {error : "Parameter 'name' is missing"});
+						}
 					} else {
-						res.json({error : "Parameter 'name' is missing"});
+						res.json(404, {error : "Member doesn't exist"});
 					}
-				} else {
-					res.json({error : "Member doesn't exist"});
+					
 				}
-				
-			}
-		});
+			});
+		} else {
+			res.json(404, {error : "Parameter 'id' is missing"});
+		}
 	});
 	
 	app.delete('/member/:id', function(req, res, next){
@@ -80,11 +84,11 @@ module.exports = function(app){
 						if(!err){
 							res.send('Deletion complete');
 						} else {
-							res.json(err);
+							res.json(500, err);
 						}
 					});
 				} else {
-					res.json({error : "Member doesn't exist"});
+					res.json(404, {error : "Member doesn't exist"});
 				}
 			}
 		});
