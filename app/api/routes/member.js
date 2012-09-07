@@ -16,6 +16,10 @@ module.exports = function(app){
 		}); 
 	});
 	
+	app.get('/member', function(req, res, next){
+		res.json(400, {error : "Parameter 'id' is missing"});
+	});
+	
 	app.get('/member/:id', function(req, res, next){
 		Member.findById(req.params.id, function (err, member) {
 			if (!err) {
@@ -43,10 +47,13 @@ module.exports = function(app){
 				}
 			});
 		} else {
-			res.json(500, {error : "Parameter 'name' is missing"});
+			res.json(400, {error : "Parameter 'name' is missing"});
 		}
 	});
 	
+	app.put('/member', function(req, res, next){
+		res.json(400, {error : "Parameter 'id' is missing"});
+	});
 	
 	app.put('/member/:id', function(req, res, next){
 		if(req.params.id){
@@ -63,7 +70,7 @@ module.exports = function(app){
 								}
 							});
 						} else {
-							res.json(500, {error : "Parameter 'name' is missing"});
+							res.json(400, {error : "Parameter 'name' is missing"});
 						}
 					} else {
 						res.json(404, {error : "Member doesn't exist"});
@@ -72,8 +79,12 @@ module.exports = function(app){
 				}
 			});
 		} else {
-			res.json(404, {error : "Parameter 'id' is missing"});
+			res.json(400, {error : "Parameter 'id' is missing"});
 		}
+	});
+	
+	app.delete('/member', function(req, res, next){
+		res.json(400, {error : "Parameter 'id' is missing"});
 	});
 	
 	app.delete('/member/:id', function(req, res, next){

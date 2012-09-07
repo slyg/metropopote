@@ -23,7 +23,7 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', function(req, res, next){ res.redirect('/sandbox'); });
-app.use('/api', 	require('./app/api/app'));
+app.use('/api', require('./app/api/app'));
 app.use('/sandbox', require('./app/sandbox/app'));
 
 // Launch http server
