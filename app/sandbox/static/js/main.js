@@ -10,7 +10,8 @@
 			e.preventDefault();
 			
 			var form = $(this),
-				params = $.parseJSON(JSON.stringify(form.serializeObject()));
+				params = $.parseJSON(JSON.stringify(form.serializeObject())),
+				logId = Date.now();
 				
 			// cooking xhr parameters
 			
@@ -18,9 +19,20 @@
 				type : params['_method'] || form.attr('method'),
 				success	: function(res){
 					form[0].reset();
-					logger.prepend('200 : ' + ((typeof res == 'object') ? indentStringified(JSON.stringify(res)) : res) + '\n\n');
+					logger.prepend(
+						logWrap(
+							'200 : ' + ( (typeof res == 'object') ? indentStringified(JSON.stringify(res)) : res ),
+							logId
+						)
+					).scrollTop(0);
+					$('#log'+logId).slideDown(100);
 				},
-				error : function(res){ logger.prepend(res.status + ' : ' + res.responseText+ '\n\n'); }
+				error : function(res){
+					logger.prepend(
+						logWrap(res.status + ' : ' + res.responseText, logId)
+					).scrollTop(0);
+					$('#log'+logId).slideDown(100);
+				}
 			};
 			xhr.url = form.attr('action');
 			if(!(xhr.type == 'post' || form.attr('id') == "retrieve-all")) xhr.url += '/' + params['id'];
@@ -40,11 +52,15 @@
 	
 		// Utils
 		
+		var logWrap = function(logContent, logId){
+			return '<pre id="log'+ logId +'">' + logContent + '</pre>';
+		}
+		
 		var indentStringified = function(zz){
 			zz = zz
 				.replace(/{\"/g, "{\n\t\"")
 				.replace(/\},/g, "\n},")
-				.replace(/\",\"/g, "\",\n\t\"")
+				.replace(/,\"/g, ",\n\t\"")
 				.replace(/}\]/g, "\n}\]")
 				.replace(/},{/g, "},\n{")
 				.replace(/}*$/, "\n}");
