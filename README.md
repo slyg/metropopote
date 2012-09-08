@@ -2,25 +2,49 @@ mongoose-restful-api
 ====================
 
 
-API playground
---------------
+####API playground
 
 See /sandbox
 
 
-API Endpoints
--------------
+####API Endpoints
+<table>
+  <tr>
+    <td>POST</td>
+    <td>/api/member</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>/api/members</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>/api/member/{MEMBER_ID}</td>
+  </tr>
+  <tr>
+    <td>PUT</td>
+    <td>/api/member/{MEMBER_ID}</td>
+  </tr>
+  <tr>
+    <td>DELETE</td>
+    <td>/api/member/{MEMBER_ID}</td>
+  </tr>
+</table>  
 
-POST		| /api/member
-GET			| /api/members
-GET			| /api/member/{MEMBER_ID}
-PUT			| /api/member/{MEMBER_ID}
-DELETE	| /api/member/{MEMBER_ID}
-  
 
-HTTP Status Code Summary
-------------------------
+####HTTP Status Code Summary
  
- > 200 OK - Everything worked as expected. 
- > 400 Bad Request - Missing a required parameter.
- > 500 Server error
+<table>
+  <tr>
+    <td>200</td>
+    <td>OK - Everything worked as expected</td>
+  </tr>
+  <tr>
+    <td>400</td>
+    <td>Bad Request - Missing a required parameter</td>
+  </tr>
+  <tr>
+    <td>500</td>
+    <td>Server error</td>
+  </tr>
+</table>
