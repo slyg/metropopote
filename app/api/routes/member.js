@@ -2,7 +2,7 @@ module.exports = function(app){
 
 	// Models dependencies
 	
-	var Member = require('../models/Member')(app);
+	var Member = require('../models/Member')(app.dbconnect);
 	
 	// Routes
 	
