@@ -7,7 +7,7 @@ mongoose-restful-api
 See /sandbox
 
 
-####API Endpoints
+####API endpoints
 <table>
   <tr>
     <td>POST</td>
@@ -32,7 +32,7 @@ See /sandbox
 </table>  
 
 
-####HTTP Status Code Summary
+####HTTP status code summary
  
 <table>
   <tr>
