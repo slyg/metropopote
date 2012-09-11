@@ -31,7 +31,7 @@ app.configure('production', function(){
 // Route list
 
 app.get('/', function(req, res) {
-	res.render('home.html', {route : app.route, cache: false});
+	res.render('home.html', {route : app.route, cache: false, apiversion : 'v1'});
 });
 
 // Launch http server
