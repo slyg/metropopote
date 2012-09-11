@@ -11,23 +11,23 @@ See /sandbox
 <table>
   <tr>
     <td>POST</td>
-    <td>/api/member</td>
+    <td>/api/v1/members</td>
   </tr>
   <tr>
     <td>GET</td>
-    <td>/api/members</td>
+    <td>/api/v1/members</td>
   </tr>
   <tr>
     <td>GET</td>
-    <td>/api/member/{MEMBER_ID}</td>
+    <td>/api/v1/members/{MEMBER_ID}</td>
   </tr>
   <tr>
     <td>PUT</td>
-    <td>/api/member/{MEMBER_ID}</td>
+    <td>/api/v1/members/{MEMBER_ID}</td>
   </tr>
   <tr>
     <td>DELETE</td>
-    <td>/api/member/{MEMBER_ID}</td>
+    <td>/api/v1/members/{MEMBER_ID}</td>
   </tr>
 </table>  
 
