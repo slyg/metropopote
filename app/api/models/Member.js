@@ -1,7 +1,8 @@
 module.exports = function(dbconnect){
 
 	var memberSchema = new require('mongoose').Schema({
-	    name: String
+	    name: String,
+	    updated_at : Date
 	});
 
 	var Member = dbconnect.model('Member', memberSchema);

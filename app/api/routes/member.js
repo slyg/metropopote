@@ -7,7 +7,13 @@ module.exports = function(app){
 	// Routes
 	
 	app.get('/members', function(req, res, next){
-		Member.find(function (err, members) {
+	
+		var 
+			limit = req.param('limit') || 10,
+			offset = req.param('offset') || 0
+		;
+	
+		Member.find().limit(limit).skip(offset*limit).sort({updated_at : -1}).exec(function (err, members) {
 			if (!err) {
 				res.json(members);
 			} else {
@@ -33,7 +39,8 @@ module.exports = function(app){
 	app.post('/members', function(req, res, next){
 		if(req.body.name){
 			var member = new Member({
-				name : req.body.name
+				name : req.body.name,
+				updated_at : Date.now()
 			});
 			member.save(function(err){
 				if(!err) {
@@ -57,6 +64,7 @@ module.exports = function(app){
 				if(!err){
 					if(member){
 						member.name = req.body.name;
+						member.updated_at = Date.now();
 						if(member.name){
 							member.save(function(err){
 								if(!err){
