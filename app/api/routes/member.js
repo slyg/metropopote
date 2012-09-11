@@ -16,11 +16,7 @@ module.exports = function(app){
 		}); 
 	});
 	
-	app.get('/member', function(req, res, next){
-		res.json(400, {error : "Parameter 'id' is missing"});
-	});
-	
-	app.get('/member/:id', function(req, res, next){
+	app.get('/members/:id', function(req, res, next){
 		Member.findById(req.params.id, function (err, member) {
 			if (!err) {
 				if(member){
@@ -34,7 +30,7 @@ module.exports = function(app){
 		}); 
 	});
 	
-	app.post('/member', function(req, res, next){
+	app.post('/members', function(req, res, next){
 		if(req.body.name){
 			var member = new Member({
 				name : req.body.name
@@ -51,11 +47,11 @@ module.exports = function(app){
 		}
 	});
 	
-	app.put('/member', function(req, res, next){
+	app.put('/members', function(req, res, next){
 		res.json(400, {error : "Parameter 'id' is missing"});
 	});
 	
-	app.put('/member/:id', function(req, res, next){
+	app.put('/members/:id', function(req, res, next){
 		if(req.params.id){
 			Member.findById(req.params.id, function (err, member) {
 				if(!err){
@@ -83,11 +79,11 @@ module.exports = function(app){
 		}
 	});
 	
-	app.delete('/member', function(req, res, next){
+	app.delete('/members', function(req, res, next){
 		res.json(400, {error : "Parameter 'id' is missing"});
 	});
 	
-	app.delete('/member/:id', function(req, res, next){
+	app.delete('/members/:id', function(req, res, next){
 		Member.findById(req.params.id, function (err, member) {
 			if(!err){
 				if(member){

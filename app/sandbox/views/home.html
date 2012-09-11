@@ -12,12 +12,12 @@
 		<div class="gr">
 			<div class="gu gu-1of2">
 				<div class="pal">
-					<form class="core-form well form-inline" action="/api/member" method="post" id="create">
+					<form class="core-form well form-inline" action="/api/members" method="post" id="create">
 						<label for="create-member">Create :  </label>
 						<input id="create-member" type="text" placeholder="Name" class="input-small" name="name" />
 						<button type="submit" class="btn btn-primary">Create member</button>
 					</form>
-					<form class="core-form well form-inline" action="/api/member" method="get" id="retrieve">
+					<form class="core-form well form-inline" action="/api/members" method="get" id="retrieve">
 						<label for="retrieve-member">Retrieve : </label>
 						<input id="retrieve-member" type="text" placeholder="Member ID" class="input-small" name="id" />
 						<button type="submit" class="btn btn-primary">Retrieve member</button>
@@ -26,14 +26,14 @@
 						<label for="retrieve-all-member">Retrieve : </label>
 						<button type="submit" class="btn btn-primary">Retrieve all members</button>
 					</form>
-					<form class="core-form well form-inline" action="/api/member" method="post" id="update">
+					<form class="core-form well form-inline" action="/api/members" method="post" id="update">
 						<label for="member-id-update">Update :  </label>
 						<input id="member-id-update" type="text" placeholder="Member ID" name="id" class="input-small" />
 						<input type="text" placeholder="Name" name="name" class="input-small" />
 						<input type="hidden" name="_method" value="put" />
 						<button type="submit" class="btn btn-primary">Update member's name</button>
 					</form>
-					<form class="core-form well form-inline" action="/api/member" method="post" id="delete">
+					<form class="core-form well form-inline" action="/api/members" method="post" id="delete">
 						<label for="delete-member">Delete :  </label>
 						<input id="delete-member" type="text" placeholder="Member ID" name="id" class="input-small" />
 						<input type="hidden" name="_method" value="delete" />
