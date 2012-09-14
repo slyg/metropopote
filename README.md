@@ -40,6 +40,10 @@ See /sandbox
     <td>OK - Everything worked as expected</td>
   </tr>
   <tr>
+    <td>201</td>
+    <td>Request fulfilled - A new resource has been created/td>
+  </tr>
+  <tr>
     <td>400</td>
     <td>Bad Request - Missing a required parameter</td>
   </tr>
