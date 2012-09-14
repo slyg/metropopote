@@ -6,12 +6,18 @@ var should = require('should'),
 	host = 'http://localhost',
 	root = host + ':' + port;
 	
-	var options = function(){
-		return {
-			port: '3000',
-			path: '/api/v1/members'
-		};
+var getOptions = function(){
+	return {
+		port: '3000',
+		path: '/api/v1/members'
 	};
+};
+
+var getTestData = function(){
+	return {
+		name : "Jean"
+	};
+};
 
 
 describe('api', function(){
@@ -20,7 +26,7 @@ describe('api', function(){
 	
 		var data, response;
 		
-		var opt = options();
+		var opt = getOptions();
 	
 		before(function(done){
 			
@@ -63,19 +69,16 @@ describe('api', function(){
 	describe('POST /api/v1/members', function(){
 		
 		var data, response;
+		var testData = getTestData();
 		
-		var data = {
-			name: 'Jean'
-		};
-		
-		var dataString = JSON.stringify(data);
+		var dataString = JSON.stringify(testData);
 		
 		var headers = {
 			'Content-Type': 'application/json',
 			'Content-Length': dataString.length
 		};
 		
-		var opt = options();
+		var opt = getOptions();
 		opt.method = 'POST';
 		opt.headers = headers;
 		
@@ -87,12 +90,11 @@ describe('api', function(){
 				var buffer = '';
 				
 				res
-					.on('data', function (chunk){
-						buffer += chunk;
-					})
+					.on('data', function (chunk){ buffer += chunk; })
 					.on('end', function(){
 						response = res;
 						data = (buffer != '') ? JSON.parse(buffer) : undefined;
+						testData['_id'] = data['_id'];
 						done();
 					})
 				;
@@ -102,10 +104,143 @@ describe('api', function(){
 		});
 		
 		it('should be successfull', function(done){
-			response.should.have.status(200);
+			response.should.have.status(201);
+			done();
+		});
+		
+		it('should respond with an object', function(done){
+			data.should.be.an.instanceof(Object);
+			done();
+		});
+		
+		it('should respond with an object containing proper properties', function(done){
+			data.should.have.property('name', testData.name);
+			data.should.have.property('_id');
 			done();
 		});
 		
 	});
+
+	describe('DELETE /api/v1/members', function(){
+		
+		var data, dataText, response;
+		
+		before(function(done){
+		
+			http.request(getOptions(), function (res){
+		
+				var buffer = '';
+				
+				res
+					.on('data', function (chunk){ buffer += chunk; })
+					.on('end', function(){
+						
+						var opt = getOptions();
+						opt.method = 'DELETE';
+						opt.path = opt.path + '/' + JSON.parse(buffer)[0]._id;
+						
+						http.request(opt, function (res){
+			
+							var buffer = '';
+							
+							res
+								.on('data', function (chunk){ buffer += chunk; })
+								.on('end', function(){
+									response = res;
+									dataText = buffer;
+									done();
+								})
+							;
+							
+						}).end();
+						
+					})
+				;
+				
+			}).end();
+										
+		});
+		
+		it('should be successfull', function(done){
+			response.should.have.status(200);
+			done();
+		});
+		
+		it('should respond a confirmation text in body', function(done){
+			dataText.should.eql('Deletion complete');
+			done();
+		});
 	
+	});
+	
+	describe('PUT /api/v1/members', function(){
+		
+		var data, response;
+		
+		var testData = getTestData();
+		testData.name = "Jacques";
+		
+		var dataString = JSON.stringify(testData);
+		
+		var headers = {
+			'Content-Type': 'application/json',
+			'Content-Length': dataString.length
+		};
+		
+		
+		before(function(done){
+		
+			http.request(getOptions(), function (res){
+		
+				var buffer = '';
+				
+				res
+					.on('data', function (chunk){ buffer += chunk; })
+					.on('end', function(){
+						
+						var opt = getOptions();
+						opt.method = 'PUT';
+						opt.headers = headers;
+						opt.path = opt.path + '/' + JSON.parse(buffer)[0]._id;
+						
+						http.request(opt, function (res){
+			
+							var buffer = '';
+							
+							res
+								.on('data', function (chunk){ buffer += chunk; })
+								.on('end', function(){
+									response = res;
+									data = (buffer != '') ? JSON.parse(buffer) : undefined;
+									done();
+								})
+							;
+							
+						}).end(dataString);
+						
+					})
+				;
+				
+			}).end();
+										
+		});
+		
+		it('should be successfull', function(done){
+			response.should.have.status(200);
+			done();
+		});
+		
+		it('should respond with an object', function(done){
+			data.should.be.an.instanceof(Object);
+			done();
+		});
+		
+		it('should respond with an object containing proper properties', function(done){
+			data.should.have.property('name', testData.name);
+			data.should.have.property('_id', testData._id);
+			done();
+		});
+	
+	});
+
 });
