@@ -13,7 +13,7 @@
 				params = $.parseJSON(JSON.stringify(form.serializeObject())),
 				logId = Date.now();
 				
-			// cooking xhr parameters
+			// cooking default xhr parameters
 			
 			var xhr = {
 				type : params['_method'] || form.attr('method'),
@@ -32,13 +32,52 @@
 						logWrap(res.status + ' : ' + res.responseText, logId)
 					).scrollTop(0);
 					$('#log'+logId).slideDown(100);
-				}
+				},
+				url : form.attr('action')
 			};
-			xhr.url = form.attr('action');
-			if(!(xhr.type == 'post' || form.attr('id') == "retrieve-all")) xhr.url += '/' + params['id'];
-			if(xhr.type == 'post' || xhr.type == 'put') xhr.data = params;
 			
-			// proceed ajax call
+			// isolate implementation attributes from usefull parameters
+			// will return object without id and method attributes or undefined if no other parameter
+			
+			var filteredParameters = (function(){
+				var obj = undefined;
+				$.each(params, function(key){
+					if(params[key]) {
+						if(!(key == 'id' || key == '_method')) {
+							if(obj == undefined) obj = {};
+							obj[key] = params[key];
+						}
+					}
+				});
+				console.log(obj);
+				return obj;
+			}());
+			
+			
+			// request parameters when GET, and DELETE :
+			//	- when id exists add id parameter
+			// 	- when other parameters, added to uri
+			
+			if(xhr.type == 'get' || xhr.type == 'delete') {
+				if(params.id) {
+					if(params.id) xhr.url += '/' + params.id
+				} else {
+					if(filteredParameters) xhr.url += '?' + $.param(filteredParameters)
+				}
+			}
+			
+			// request parameters when POST :
+			
+			if(xhr.type == 'post') xhr.data = filteredParameters;
+			
+			// request parameters when PUT :
+			
+			if(xhr.type == 'put') {
+				if(filteredParameters) xhr.data = filteredParameters;
+				if(params.id) xhr.url += '/' + params.id
+			}
+			
+			// proceed ajax call and cross fingers
 			
 			$.ajax(xhr);
 			

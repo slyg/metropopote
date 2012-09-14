@@ -24,6 +24,8 @@
 					</form>
 					<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="get" id="retrieve-all">
 						<label for="retrieve-all-member">Retrieve : </label>
+						<input type="text" name="offset" placeholder="offset" class="input-small" />
+						<input type="text" name="limit" placeholder="limit" class="input-small" />
 						<button type="submit" class="btn btn-primary">Retrieve all members</button>
 					</form>
 					<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="post" id="update">
