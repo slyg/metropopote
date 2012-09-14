@@ -44,7 +44,7 @@ module.exports = function(app){
 			});
 			member.save(function(err){
 				if(!err) {
-					res.json(member);
+					res.json(201, member);
 				} else {
 					res.json(500, err);
 				}

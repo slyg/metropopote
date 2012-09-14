@@ -17,17 +17,17 @@
 			
 			var xhr = {
 				type : params['_method'] || form.attr('method'),
-				success	: function(res){
+				success	: function(res, status, jqXHR){
 					form[0].reset();
 					logger.prepend(
 						logWrap(
-							'200 : ' + ( (typeof res == 'object') ? indentStringified(JSON.stringify(res)) : res ),
+							jqXHR.status + ' : ' + ( (typeof res == 'object') ? indentStringified(JSON.stringify(res)) : res ),
 							logId
 						)
 					).scrollTop(0);
 					$('#log'+logId).slideDown(100);
 				},
-				error : function(res){
+				error : function(res, status, jqXHR){
 					logger.prepend(
 						logWrap(res.status + ' : ' + res.responseText, logId)
 					).scrollTop(0);
