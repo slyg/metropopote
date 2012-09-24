@@ -74,6 +74,9 @@ describe('api', function(){
 		
 		it('should respond with an object containing proper properties', function(done){
 			data.should.have.property('name', testData.name);
+			data.should.have.property('username', testData.username);
+			data.should.have.property('email', testData.email);
+			data.should.have.property('password', testData.password);
 			data.should.have.property('_id');
 			done();
 		});
