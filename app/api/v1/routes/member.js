@@ -14,11 +14,24 @@ module.exports = function(app){
 		;
 	
 		Member.find().limit(limit).skip(offset*limit).sort({updated_at : -1}).exec(function (err, members) {
+		
 			if (!err) {
-				res.json(members);
+		
+				Member.count({}, function(err, count){
+					if(!err){
+						res.json({
+							data : members,
+							count : count
+						});
+					} else {
+						res.json(500, err);
+					}
+				});
+			
 			} else {
 				res.json(500, err);
 			}
+
 		}); 
 	});
 	

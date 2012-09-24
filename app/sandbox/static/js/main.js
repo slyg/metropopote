@@ -18,10 +18,16 @@
 			var xhr = {
 				type : params['_method'] || form.attr('method'),
 				success	: function(res, status, jqXHR){
+					var data;
+					if (typeof res == "object") {
+						data = ("data" in res) ? res.data : res;
+					} else {
+						data = res;
+					}
 					form[0].reset();
 					logger.prepend(
 						logWrap(
-							jqXHR.status + ' : ' + ( (typeof res == 'object') ? indentStringified(JSON.stringify(res)) : res ),
+							jqXHR.status + ' : ' + ( (typeof res == 'object') ? indentStringified(JSON.stringify(data)) : data ),
 							logId
 						)
 					).scrollTop(0);
@@ -49,7 +55,6 @@
 						}
 					}
 				});
-				console.log(obj);
 				return obj;
 			}());
 			
@@ -96,14 +101,15 @@
 		}
 		
 		var indentStringified = function(zz){
-			zz = zz
+			zr = zz
 				.replace(/{\"/g, "{\n\t\"")
 				.replace(/\},/g, "\n},")
 				.replace(/,\"/g, ",\n\t\"")
 				.replace(/}\]/g, "\n}\]")
 				.replace(/},{/g, "},\n{")
-				.replace(/}*$/, "\n}");
-			return zz;
+				.replace(/\"}*$/, "\"\n}")
+				.replace(/0}*$/, "0\n}");
+			return zr;
 		}
 	
 		$.fn.serializeObject = function(){

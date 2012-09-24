@@ -55,12 +55,18 @@ describe('api', function(){
 		});
 		
 		it('should respond with an array', function(done){
-			data.should.be.an.instanceOf(Array);
+			data.data.should.be.an.instanceOf(Array);
+			done();
+		});
+		
+		it('should respond with total count of items', function(done){
+			data.should.have.property('count');
+			parseInt(data.count).should.be.above(-1);
 			done();
 		});
 		
 		it('should respond with an array containing no more than 10 items', function(done){
-			data.length.should.be.within(0, 10);
+			data.data.length.should.be.within(0, 10);
 			done();
 		});
 		
@@ -137,7 +143,7 @@ describe('api', function(){
 						
 						var opt = getOptions();
 						opt.method = 'DELETE';
-						opt.path = opt.path + '/' + JSON.parse(buffer)[0]._id;
+						opt.path = opt.path + '/' + JSON.parse(buffer).data[0]._id;
 						
 						http.request(opt, function (res){
 			
@@ -201,7 +207,7 @@ describe('api', function(){
 						var opt = getOptions();
 						opt.method = 'PUT';
 						opt.headers = headers;
-						opt.path = opt.path + '/' + JSON.parse(buffer)[0]._id;
+						opt.path = opt.path + '/' + JSON.parse(buffer).data[0]._id;
 						
 						http.request(opt, function (res){
 			
