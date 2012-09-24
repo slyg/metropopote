@@ -13,7 +13,7 @@ module.exports = function(app){
 			offset = req.param('offset') || 0
 		;
 	
-		Member.find().limit(limit).skip(offset*limit).sort({updated_at : -1}).exec(function (err, members) {
+		Member.find().limit(limit).skip(offset*limit).sort({updated : -1}).exec(function (err, members) {
 		
 			if (!err) {
 		
@@ -50,11 +50,8 @@ module.exports = function(app){
 	});
 	
 	app.post('/' + app.version + '/members', function(req, res, next){
-		if(req.body.name){
-			var member = new Member({
-				name : req.body.name,
-				updated_at : Date.now()
-			});
+		if(req.body){
+			var member = new Member(req.body);
 			member.save(function(err){
 				if(!err) {
 					res.json(201, member);
@@ -76,9 +73,11 @@ module.exports = function(app){
 			Member.findById(req.params.id, function (err, member) {
 				if(!err){
 					if(member){
-						member.name = req.body.name;
-						member.updated_at = Date.now();
-						if(member.name){
+						for(var key in req.body){
+							member[key] = req.body[key];
+						}
+						member.updated = Date.now();
+						if(member.username){
 							member.save(function(err){
 								if(!err){
 									res.json(member);

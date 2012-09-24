@@ -14,7 +14,10 @@
 				<div class="pal">
 					<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="post" id="create">
 						<label for="create-member">Create :  </label>
-						<input id="create-member" type="text" placeholder="Name" class="input-small" name="name" />
+						<input id="create-member" type="text" placeholder="1st and lastname" class="input-small" name="name" />
+						<input id="create-member-username" type="text" placeholder="Username*" class="input-small" name="username" />
+						<input id="create-member-email" type="text" placeholder="Email*" class="input-small" name="email" />
+						<input id="create-member-password" type="password" placeholder="Password*" class="input-small" name="password" />
 						<button type="submit" class="btn btn-primary">Create member</button>
 					</form>
 					<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="get" id="retrieve">
@@ -31,7 +34,7 @@
 					<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="post" id="update">
 						<label for="member-id-update">Update :  </label>
 						<input id="member-id-update" type="text" placeholder="Member ID" name="id" class="input-small" />
-						<input type="text" placeholder="Name" name="name" class="input-small" />
+						<input type="text" placeholder="Username" name="username" class="input-small" />
 						<input type="hidden" name="_method" value="put" />
 						<button type="submit" class="btn btn-primary">Update member's name</button>
 					</form>
