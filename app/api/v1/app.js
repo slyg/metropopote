@@ -31,6 +31,7 @@ app.version = 'v1';
 // Routes
 
 require('./routes/member')(app);
+require('./routes/recipe')(app);
 
 // Route list
 

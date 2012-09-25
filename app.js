@@ -22,7 +22,7 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', function(req, res, next){ res.redirect('/sandbox'); });
+app.get('/', function(req, res, next){ res.redirect('/sandbox#member-tab'); });
 app.use('/api', require('./app/api/v1/app'));
 app.use('/sandbox', require('./app/sandbox/app'));
 

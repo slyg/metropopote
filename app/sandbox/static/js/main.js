@@ -1,6 +1,8 @@
 
 
 	(function(){
+	
+		/* logger and forms submits */
 	    		
 		var logger = $('#logger');
 	
@@ -127,5 +129,13 @@
 		    });
 		    return o;
 		};
+		
+		
+		/* Tabs */
+		
+		$('.nav li').click(function(e){
+			$(e.delegateTarget).addClass('active').siblings().removeClass('active');
+		});
+		
 	
 	}());

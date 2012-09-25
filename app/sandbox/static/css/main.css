@@ -1,5 +1,10 @@
 #logcontainer {position: relative;}
 #logger {height: 20em; overflow-y:scroll; box-shadow : 0 1px 1px rgba(0, 0, 0, 0.075) inset; border : 1px solid #D5DCE0; border-radius : 3px;}
-#logger pre {display: none; margin-bottom: 1px; padding: 0.5em 0.8em; background: #F7F7F7;}
+#logger pre {display: none; margin-bottom: 1px; padding: 0.5em 0.8em; background: #F7F9FA;}
 #logger .displayed {display: block;}
 #clearlog {position: absolute; bottom: 0; right: 0;}
+
+#member-tab,
+#recipe-tab {display: none;}
+#recipe-tab:target,
+#member-tab:target {display: block;}

@@ -6,6 +6,21 @@ module.exports = function(app){
 	
 	// Routes
 	
+	app.post('/' + app.version + '/members', function(req, res, next){
+		if(req.body){
+			var member = new Member(req.body);
+			member.save(function(err){
+				if(!err) {
+					res.json(201, member);
+				} else {
+					res.json(500, err);
+				}
+			});
+		} else {
+			res.json(400, {error : "Parameter missing"});
+		}
+	});
+	
 	app.get('/' + app.version + '/members', function(req, res, next){
 	
 		var 
@@ -47,21 +62,6 @@ module.exports = function(app){
 				res.json(500, err);
 			}
 		}); 
-	});
-	
-	app.post('/' + app.version + '/members', function(req, res, next){
-		if(req.body){
-			var member = new Member(req.body);
-			member.save(function(err){
-				if(!err) {
-					res.json(201, member);
-				} else {
-					res.json(500, err);
-				}
-			});
-		} else {
-			res.json(400, {error : "Parameter 'name' is missing"});
-		}
 	});
 	
 	app.put('/' + app.version + '/members', function(req, res, next){

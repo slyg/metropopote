@@ -11,39 +11,66 @@
 		<h1 class="pll">Play w/ API</h1>
 		<div class="gr">
 			<div class="gu gu-1of2">
+				<ul class="nav nav-tabs mrl">
+					<li class="active"><a href="#member-tab">Member</a></li>
+					<li><a href="#recipe-tab">Recipe</a></li>
+				</ul>
 				<div class="pal">
-					<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="post" id="create">
-						<label for="create-member">Create :  </label>
-						<input id="create-member" type="text" placeholder="1st and lastname" class="input-small" name="name" />
-						<input id="create-member-username" type="text" placeholder="Username*" class="input-small" name="username" />
-						<input id="create-member-email" type="text" placeholder="Email*" class="input-small" name="email" />
-						<input id="create-member-password" type="password" placeholder="Password*" class="input-small" name="password" />
-						<button type="submit" class="btn btn-primary">Create member</button>
-					</form>
-					<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="get" id="retrieve">
-						<label for="retrieve-member">Retrieve : </label>
-						<input id="retrieve-member" type="text" placeholder="Member ID" class="input-small" name="id" />
-						<button type="submit" class="btn btn-primary">Retrieve member</button>
-					</form>
-					<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="get" id="retrieve-all">
-						<label for="retrieve-all-member">Retrieve : </label>
-						<input type="text" name="offset" placeholder="offset" class="input-small" />
-						<input type="text" name="limit" placeholder="limit" class="input-small" />
-						<button type="submit" class="btn btn-primary">Retrieve all members</button>
-					</form>
-					<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="post" id="update">
-						<label for="member-id-update">Update :  </label>
-						<input id="member-id-update" type="text" placeholder="Member ID" name="id" class="input-small" />
-						<input type="text" placeholder="Username" name="username" class="input-small" />
-						<input type="hidden" name="_method" value="put" />
-						<button type="submit" class="btn btn-primary">Update member's name</button>
-					</form>
-					<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="post" id="delete">
-						<label for="delete-member">Delete :  </label>
-						<input id="delete-member" type="text" placeholder="Member ID" name="id" class="input-small" />
-						<input type="hidden" name="_method" value="delete" />
-						<button type="submit" class="btn btn-primary">Delete member</button>
-					</form>
+					<div id="member-tab">
+						<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="post" id="create">
+							<label for="create-member">Create :  </label>
+							<input id="create-member" type="text" placeholder="1st and lastname" class="input-small" name="name" />
+							<input id="create-member-username" type="text" placeholder="Username*" class="input-small" name="username" />
+							<input id="create-member-email" type="text" placeholder="Email*" class="input-small" name="email" />
+							<input id="create-member-password" type="password" placeholder="Password*" class="input-small" name="password" />
+							<button type="submit" class="btn btn-primary">Create member</button>
+						</form>
+						<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="get" id="retrieve">
+							<label for="retrieve-member">Retrieve : </label>
+							<input id="retrieve-member" type="text" placeholder="Member ID" class="input-small" name="id" />
+							<button type="submit" class="btn btn-primary">Retrieve member</button>
+						</form>
+						<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="get" id="retrieve-all">
+							<label for="retrieve-all-member">Retrieve : </label>
+							<input type="text" name="offset" placeholder="offset" class="input-small" />
+							<input type="text" name="limit" placeholder="limit" class="input-small" />
+							<button type="submit" class="btn btn-primary">Retrieve all members</button>
+						</form>
+						<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="post" id="update">
+							<label for="member-id-update">Update :  </label>
+							<input id="member-id-update" type="text" placeholder="Member ID" name="id" class="input-small" />
+							<input type="text" placeholder="Username" name="username" class="input-small" />
+							<input type="hidden" name="_method" value="put" />
+							<button type="submit" class="btn btn-primary">Update member's name</button>
+						</form>
+						<form class="core-form well form-inline" action="/api/{{ apiversion }}/members" method="post" id="delete">
+							<label for="delete-member">Delete :  </label>
+							<input id="delete-member" type="text" placeholder="Member ID" name="id" class="input-small" />
+							<input type="hidden" name="_method" value="delete" />
+							<button type="submit" class="btn btn-primary">Delete member</button>
+						</form>
+					</div>
+					<div id="recipe-tab">
+						<form class="core-form well form-inline" action="/api/{{ apiversion }}/recipes" method="post" id="create">
+							<label for="create-recipe">Create :  </label>
+							<input id="create-recipe" type="text" placeholder="Recipe title *" class="input-small" name="title" />
+							<input id="create-recipe-ingredient" type="text" placeholder="Ingredient" class="input-small" name="ingredients" />
+							<input id="create-recipe-ingredient2" type="text" placeholder="Ingredient" class="input-small" name="ingredients" />
+							<input id="create-recipe-owner" type="text" placeholder="Owner ID*" class="input-small" name="owner" />
+							<button type="submit" class="btn btn-primary">Create recipe</button>
+						</form>
+						<form class="core-form well form-inline" action="/api/{{ apiversion }}/recipes" method="get" id="retrieve">
+							<label for="retrieve-recipe">Retrieve : </label>
+							<input id="retrieve-recipe" type="text" placeholder="Recipe ID" class="input-small" name="id" />
+							<button type="submit" class="btn btn-primary">Retrieve recipe</button>
+						</form>
+						<form class="core-form well form-inline" action="/api/{{ apiversion }}/recipes" method="get" id="retrieve-all">
+							<label for="retrieve-all-recipes">Retrieve : </label>
+							<input type="text" name="offset" placeholder="offset" class="input-small" />
+							<input type="text" name="limit" placeholder="limit" class="input-small" />
+							<button type="submit" class="btn btn-primary">Retrieve all recipes</button>
+						</form>
+					</div>
 				</div>
 			</div>
 			<div class="gu gu-last">
