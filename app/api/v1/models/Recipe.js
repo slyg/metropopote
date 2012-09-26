@@ -14,7 +14,7 @@ module.exports = function(dbconnect){
 	var Recipe = dbconnect.model('Recipe', recipeSchema);
 	
 	Recipe.schema.path('title').validate(function (value) {
-		return /^[a-zA-Z\u00E0-\u00FC]+$/g.test(value);
+		return /^[a-zA-Z\u00E0-\u00FC -]+$/g.test(value);
 	}, 'Invalid title (letters only)');
 
 	return Recipe;

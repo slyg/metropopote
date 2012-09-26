@@ -30,8 +30,11 @@ app.version = 'v1';
 
 // Routes
 
-require('./routes/member')(app);
-require('./routes/recipe')(app);
+//require('./routes/member')(app);
+//require('./routes/recipe')(app);
+
+require('./routes/factory')(app, 'member');
+require('./routes/factory')(app, 'recipe');
 
 // Route list
 

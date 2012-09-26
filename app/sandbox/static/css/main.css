@@ -3,6 +3,7 @@
 #logger pre {display: none; margin-bottom: 1px; padding: 0.5em 0.8em; background: #F7F9FA;}
 #logger .displayed {display: block;}
 #clearlog {position: absolute; bottom: 0; right: 0;}
+label {width: 5em;}
 
 #member-tab,
 #recipe-tab {display: none;}

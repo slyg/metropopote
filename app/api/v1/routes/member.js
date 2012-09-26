@@ -77,17 +77,13 @@ module.exports = function(app){
 							member[key] = req.body[key];
 						}
 						member.updated = Date.now();
-						if(member.username){
-							member.save(function(err){
-								if(!err){
-									res.json(member);
-								} else {
-									res.json(500, err);
-								}
-							});
-						} else {
-							res.json(400, {error : "Parameter 'name' is missing"});
-						}
+						member.save(function(err){
+							if(!err){
+								res.json(member);
+							} else {
+								res.json(500, err);
+							}
+						});
 					} else {
 						res.json(404, {error : "Member doesn't exist"});
 					}

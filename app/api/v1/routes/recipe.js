@@ -63,5 +63,58 @@ module.exports = function(app){
 			}
 		}); 
 	});
+	
+	app.put('/' + app.version + '/recipes', function(req, res, next){
+		res.json(400, {error : "Parameter 'id' is missing"});
+	});
+	
+	app.put('/' + app.version + '/recipes/:id', function(req, res, next){
+		if(req.params.id){
+			Recipe.findById(req.params.id, function (err, recipe) {
+				if(!err){
+					if(recipe){
+						for(var key in req.body){
+							recipe[key] = req.body[key];
+						}
+						recipe.updated = Date.now();
+						recipe.save(function(err){
+							if(!err){
+								res.json(recipe);
+							} else {
+								res.json(500, err);
+							}
+						});
+					} else {
+						res.json(404, {error : "Recipe doesn't exist"});
+					}
+					
+				}
+			});
+		} else {
+			res.json(400, {error : "Parameter 'id' is missing"});
+		}
+	});
+	
+	app.delete('/' + app.version + '/recipes', function(req, res, next){
+		res.json(400, {error : "Parameter 'id' is missing"});
+	});
+	
+	app.delete('/' + app.version + '/recipes/:id', function(req, res, next){
+		Recipe.findById(req.params.id, function (err, recipe) {
+			if(!err){
+				if(recipe){
+					recipe.remove(function(err){
+						if(!err){
+							res.send('Deletion complete');
+						} else {
+							res.json(500, err);
+						}
+					});
+				} else {
+					res.json(404, {error : "Recipe doesn't exist"});
+				}
+			}
+		});
+	});
 
 };
