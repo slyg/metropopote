@@ -28,17 +28,23 @@ mongoose.connection.on('error', function (err) {
 // Setup API version
 app.version = 'v1';
 
-// Routes
+// Default Routes
 
-var routeFactory = require('./routes/factory');
+require('./routes/factory')(app, [
+	'member',
+	'recipe',
+	'reservation',
+	'course',
+	'location',
+	'metro_station',
+	'metro_line'
+]);
 
-routeFactory(app, 'member');
-routeFactory(app, 'recipe');
-routeFactory(app, 'reservation');
-routeFactory(app, 'course');
-routeFactory(app, 'location');
+// Additionnal routes
 
-// Route list
+require('./routes/recipe.ingredient')(app);
+
+// Route list (documentation)
 
 app.get('/', function(req, res) {
   
