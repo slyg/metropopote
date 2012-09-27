@@ -6,8 +6,8 @@ module.exports = function(dbconnect){
 	var reservationSchema = new Schema({
 		coupon: { type: String, required: true},
 		portions: { type: Number, min: 1, max: 50, required: true },
-		owner : { type: ObjectId, required: true},
-		course : { type: ObjectId, required: true},
+		id_owner : { type: ObjectId, required: true},
+		id_course : { type: ObjectId, required: true},
 	    updated : { type: Date, default: Date.now },
 	    created : { type: Date, default: Date.now }
 	});

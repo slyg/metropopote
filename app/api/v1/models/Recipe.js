@@ -6,7 +6,7 @@ module.exports = function(dbconnect){
 	var recipeSchema = new Schema({
 		title: { type: String, required: true },
 		ingredients : [{ type: String, lowercase: true }],
-		owner : { type: ObjectId, required: true},
+		id_owner : { type: ObjectId, required: true},
 	    updated : { type: Date, default: Date.now },
 	    created : { type: Date, default: Date.now }
 	});
