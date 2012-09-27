@@ -35,6 +35,7 @@ var routeFactory = require('./routes/factory');
 routeFactory(app, 'member');
 routeFactory(app, 'recipe');
 routeFactory(app, 'reservation');
+routeFactory(app, 'course');
 
 // Route list
 
