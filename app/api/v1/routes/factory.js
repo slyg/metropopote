@@ -1,3 +1,5 @@
+// This factory builds default REST routes
+
 module.exports = function(app, modelName){
 
 	// Models dependencies

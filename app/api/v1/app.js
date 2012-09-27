@@ -30,11 +30,11 @@ app.version = 'v1';
 
 // Routes
 
-//require('./routes/member')(app);
-//require('./routes/recipe')(app);
+var routeFactory = require('./routes/factory');
 
-require('./routes/factory')(app, 'member');
-require('./routes/factory')(app, 'recipe');
+routeFactory(app, 'member');
+routeFactory(app, 'recipe');
+routeFactory(app, 'reservation');
 
 // Route list
 
