@@ -36,6 +36,7 @@ routeFactory(app, 'member');
 routeFactory(app, 'recipe');
 routeFactory(app, 'reservation');
 routeFactory(app, 'course');
+routeFactory(app, 'location');
 
 // Route list
 
