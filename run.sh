@@ -7,12 +7,20 @@
 # Test if arguments are passed
 
 hasarg=0
+mongodbversion="1.8.2"
 
+# tests if arguments
 if test $# = 0
 then
 	hasarg=0
 else
 	hasarg=1
+fi
+
+test if mongodbversion specified
+if test $2
+then 
+	mongodbversion=$2
 fi
 
 # Manage options
@@ -26,15 +34,15 @@ case $1 in
     -h | --help)
       # usage and help
       echo "
--h, --help	Show options
--m, --mongod	Launch mongodb server with node app
+-h, --help		Show options
+-m, --mongod <version>	Launch mongodb server with node app, <version> is not mandatory, defaults 1.8.2
       "
       ;;
       
     -m | --mongod)
       echo "Launch mongod on in new shell (new terminal window)"
       osascript -e 'tell app "Terminal"
-      	do script "/usr/local/Cellar/mongodb/1.8.2-x86_64/bin/mongod"
+      	do script "/usr/local/Cellar/mongodb/'"$mongodbversion"'-x86_64/bin/mongod"
       end tell' & node app
       ;;
 
