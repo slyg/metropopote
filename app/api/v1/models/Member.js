@@ -4,8 +4,8 @@ module.exports = function(dbconnect){
 
 	var memberSchema = new require('mongoose').Schema({
 	    name: { type: String },
-	    username: { type: String, required: true, index: { unique: true } },
-	    email: { type: String, required: true, index: { unique: true }, validate: /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/ },
+	    username: { type: String, required: true, unique: true, index: { unique: true } },
+	    email: { type: String, required: true, unique: true, index: { unique: true }, validate: /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/ },
 	    password : { type: String, set:encodePassword ,required: true },
 	    customer_reputation : { type: Number, default: 0 },
 	    cook_reputation : { type: Number, default: 0 },
