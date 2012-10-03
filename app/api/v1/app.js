@@ -37,7 +37,8 @@ require('./routes/factory')(app, [
 	'course',
 	'location',
 	'metro_station',
-	'metro_line'
+	'metro_line',
+	'authenticated_app'
 ]);
 
 // Additionnal routes

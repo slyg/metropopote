@@ -76,7 +76,8 @@ describe('api', function(){
 			data.should.have.property('name', testData.name);
 			data.should.have.property('username', testData.username);
 			data.should.have.property('email', testData.email);
-			data.should.have.property('password', testData.password);
+			var salt = require('../app/api/v1/models/conf.js').salt
+			data.should.have.property('password', require('crypto').createHmac('sha1', salt).update(testData.password).digest('hex'));
 			data.should.have.property('_id');
 			done();
 		});
