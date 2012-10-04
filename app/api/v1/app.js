@@ -44,6 +44,7 @@ require('./routes/factory')(app, [
 // Additionnal routes
 
 require('./routes/recipe.ingredient')(app);
+require('./routes/search.member.js')(app);
 
 // Route list (documentation)
 

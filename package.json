@@ -7,7 +7,9 @@
 		"consolidate"	: ">=0.3.1",
 		"swig"		: ">=0.11.3",
 		"mongoose"	: ">=3.1.0",
-		"async"		: ">=0.1.22"
+		"async"		: ">=0.1.22",
+		"passport"      : ">=0.1.12",
+                "passport-twitter" : "*"
 	},
 	"devDependencies" : {
 		"mocha"		: ">=1.4.x",

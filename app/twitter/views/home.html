@@ -1,0 +1,26 @@
+<!doctype>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Connect via Twitter</title>
+    <link type="text/css" rel="stylesheet" href="http://static2.viadeo-static.com/resource/20120905122533/coreui.css" media="all" />
+</head>
+<body data-route-context="{{ route }}">
+	<div class="pal">
+	{% if !user  %}
+
+	{%  else  %}
+		<p><a href="{{ route }}">Home</a> | <a href="{{ route }}logout">Log Out</a></p>
+	{% endif  %}
+
+
+	{% if !user  %}
+		<h2>Welcome! Please log in.</h2>
+  		<a href="{{ route }}auth/twitter"><img src="{{ route }}sign-in-with-twitter-l.png" width="151" height="24"></a>
+	{% else %}
+		<h2>Hello, {{ user.name }}.</h2>
+  		<img src="{{ user.image }}"/>
+	{% endif %}
+	</div>
+</body>
+</html>
