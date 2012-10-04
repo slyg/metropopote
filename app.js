@@ -22,8 +22,8 @@ app.configure('production', function(){
 
 // Routes
 
-//app.get('/', function(req, res, next){ res.redirect('/sandbox#member-tab'); });
-app.use('/', require('./app/twitter/app'));
+//app.get('/', function(req, res, next){ res.redirect('/login'); });
+app.use('/', require('./app/mobile/app'));
 app.use('/api', require('./app/api/v1/app'));
 app.use('/sandbox', require('./app/sandbox/app'));
 //app.use('/twitter', require('./app/twitter/app'));

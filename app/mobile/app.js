@@ -116,8 +116,11 @@ app.configure('development', function(){
 });
 
 // routing
-app.get('/', function(req, res){
-	res.render('home.html', { user: req.user, route : app.route, cache: false });
+
+app.get('/', ensureAuthenticated, function(req, res){ res.redirect('/home'); });
+
+app.get('/login', function(req, res){
+	res.render('login.html', { user: req.user, route : app.route });
 });
 
 app.get('/auth/twitter',
@@ -129,9 +132,13 @@ app.get('/auth/twitter',
 app.get('/auth/twitter/callback', 
 	passport.authenticate('twitter', { failureRedirect: '/login' }),
 	function(req, res) {
-		res.redirect('/');
+		res.redirect('/home');
 	}
 );
+
+app.get('/home', function(req, res){
+        res.render('login.html', { user: req.user, route : app.route });
+});
 
 app.get('/logout', function(req, res){
 	req.logout();
@@ -141,7 +148,7 @@ app.get('/logout', function(req, res){
 // routing authentication check
 function ensureAuthenticated(req, res, next) {
 	if (req.isAuthenticated()) { return next(); }
-	res.redirect('/');
+	res.redirect('/login');
 }
 
 if (!module.parent) {
