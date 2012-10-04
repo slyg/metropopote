@@ -28,19 +28,19 @@ passport.use(new TwitterStrategy({
 },
 function(token, tokenSecret, profile, done) {
 
-    http.get("http://" + host + ":" + port + "/api/v1/search/members?uid=" + profile.id, function(res) {
+    http.get("http://" + host + ":" + port + "/api/v1/search/users?uid=" + profile.id, function(res) {
 	
 	parsePost(res, function(response){
-		if(response.count == 1){ // means we have a known member
+		if(response.count == 1){ // means we have a known user
 
-                        console.log('known member');
+                        console.log('known user');
                         done(null, response.data[0]);
 
-                } else { //means unknown member
+                } else { //means unknown user
 
-                        console.log('unknown member, creating a new one');
+                        console.log('unknown user, creating a new one');
 
-                        var newMember = JSON.stringify({
+                        var newUser = JSON.stringify({
                                 provider : "twitter",
                                 uid : profile.id,
                                 name : profile.displayName,
@@ -51,20 +51,20 @@ function(token, tokenSecret, profile, done) {
                         var options = {
                                 host: host,
                                 port: port,
-                                path: '/api/v1/members',
+                                path: '/api/v1/users',
                                 method: 'POST',
                                 headers : {
                                         'Content-Type': 'application/json',
-                                        'Content-Length': newMember.length
+                                        'Content-Length': newUser.length
                                 }
                         };
 
                         http.request(options, function(res){
                                 parsePost(res, function(response){
-                                        console.log('created member');
+                                        console.log('created user');
                                         done(null, response);
                                 });
-                        }).end(newMember);
+                        }).end(newUser);
 
                 }
 	});
@@ -81,15 +81,15 @@ function parsePost(res, callback) {
 }
 
 // session stuff
-passport.serializeUser(function(member, done) { done(null, member.uid); });
+passport.serializeUser(function(user, done) { done(null, user.uid); });
 passport.deserializeUser(function(uid, done) {
-	http.get("http://" + host + ":" + port + "/api/v1/search/members?uid=" + uid, function(res) {
+	http.get("http://" + host + ":" + port + "/api/v1/search/users?uid=" + uid, function(res) {
 		parsePost(res, function(response){
-               		var member = response.data[0];
-                	if(member) {
-                        	done(null, member);
+               		var user = response.data[0];
+                	if(user) {
+                        	done(null, user);
                 	} else {
-                        	done(null, new Error("unable to find supposed known member"));
+                        	done(null, new Error("unable to find supposed known user"));
                 	}
 		});
 	});

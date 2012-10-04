@@ -9,7 +9,7 @@ var should = require('should'),
 var getOptions = function(){
 	return {
 		port: '3000',
-		path: '/api/v1/members'
+		path: '/api/v1/users'
 	};
 };
 
@@ -25,7 +25,7 @@ var getTestData = function(){
 
 describe('api', function(){
 	
-	describe('POST /api/v1/members', function(){
+	describe('POST /api/v1/users', function(){
 		
 		var data, response;
 		var testData = getTestData();
@@ -84,7 +84,7 @@ describe('api', function(){
 		
 	});
 	
-	describe('GET /api/v1/members', function(){
+	describe('GET /api/v1/users', function(){
 	
 		var data, response;
 		
@@ -135,7 +135,7 @@ describe('api', function(){
 	});
 
 	
-	describe('PUT /api/v1/members', function(){
+	describe('PUT /api/v1/users', function(){
 		
 		var data, response;
 		
@@ -205,7 +205,7 @@ describe('api', function(){
 	
 	});
 
-	describe('DELETE /api/v1/members', function(){
+	describe('DELETE /api/v1/users', function(){
 		
 		var data, dataText, response;
 		

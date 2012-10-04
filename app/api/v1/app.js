@@ -31,7 +31,7 @@ app.version = 'v1';
 // Default Routes
 
 require('./routes/factory')(app, [
-	'member',
+	'user',
 	'recipe',
 	'reservation',
 	'course',
@@ -44,7 +44,7 @@ require('./routes/factory')(app, [
 // Additionnal routes
 
 require('./routes/recipe.ingredient')(app);
-require('./routes/search.member.js')(app);
+require('./routes/search.user.js')(app);
 
 // Route list (documentation)
 

@@ -5,7 +5,7 @@
 #clearlog {position: absolute; bottom: 0; right: 0;}
 label {width: 5em;}
 
-#member-tab,
+#user-tab,
 #recipe-tab {display: none;}
 #recipe-tab:target,
-#member-tab:target {display: block;}
+#user-tab:target {display: block;}
