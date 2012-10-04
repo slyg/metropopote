@@ -12,7 +12,7 @@
 		<div class="gr">
 			<div class="gu gu-3of5">
 				<ul class="nav nav-tabs mrl">
-					<li class="active"><a href="#user-tab">Member</a></li>
+					<li class="active"><a href="#user-tab">User</a></li>
 					<li><a href="#recipe-tab">Recipe</a></li>
 				</ul>
 				<div class="pal">
@@ -27,7 +27,7 @@
 						</form>
 						<form class="core-form well form-inline" action="/api/{{ apiversion }}/users" method="get">
 							<label for="retrieve-user">Retrieve : </label>
-							<input id="retrieve-user" type="text" placeholder="Member ID" class="input-small" name="id" />
+							<input id="retrieve-user" type="text" placeholder="User ID" class="input-small" name="id" />
 							<button type="submit" class="btn btn-primary">Retrieve user</button>
 						</form>
 						<form class="core-form well form-inline" action="/api/{{ apiversion }}/users" method="get">
@@ -38,7 +38,7 @@
 						</form>
 						<form class="core-form well form-inline" action="/api/{{ apiversion }}/users" method="post">
 							<label for="user-id-update">Update :  </label>
-							<input id="user-id-update" type="text" placeholder="Member ID" name="id" class="input-small" />
+							<input id="user-id-update" type="text" placeholder="User ID" name="id" class="input-small" />
 							<input type="text" placeholder="1st and lastname" name="name" class="input-small" />
 							<input type="text" placeholder="Username" name="username" class="input-small" />
 							<input type="hidden" name="_method" value="put" />
@@ -46,7 +46,7 @@
 						</form>
 						<form class="core-form well form-inline" action="/api/{{ apiversion }}/users" method="post">
 							<label for="delete-user">Delete :  </label>
-							<input id="delete-user" type="text" placeholder="Member ID" name="id" class="input-small" />
+							<input id="delete-user" type="text" placeholder="User ID" name="id" class="input-small" />
 							<input type="hidden" name="_method" value="delete" />
 							<button type="submit" class="btn btn-primary">Delete user</button>
 						</form>
