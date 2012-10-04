@@ -14,25 +14,6 @@ var
 // creating app
 var app = module.exports = express();
 
-// setting user model schema
-/*var UserSchema = new Schema({
-  provider: String,
-  uid: String,
-  name: String,
-  image: String,
-  created: {type: Date, default: Date.now}
-});
-*/
-// connecting to mongodb
-/*mongoose.connect('mongodb://localhost/twitter-mongo');
-mongoose.connection.on('error', function (err) {
-        console.error('MongoDB error: ' + err.message);
-        console.error('Make sure a mongoDB server is running and accessible by this application')
-});
-*/
-// assigning User document schema
-//mongoose.model('User', UserSchema);
-//var User = mongoose.model('User');
 
 // twitter credencials
 var TWITTER_CONSUMER_KEY = "cEEX9ZxFerB7SeGPhx3Hcw";
@@ -47,60 +28,95 @@ passport.use(new TwitterStrategy({
   function(token, tokenSecret, profile, done) {
 
     http.get("http://local.host:3000/api/v1/search/members?uid=" + profile.id, function(res) {
-	
 	var buffer = '';
 	res.on('data', function(chunk){buffer += chunk;});
 	res.on('end', function(){
+
 		var response = JSON.parse(buffer);
-		console.log(response);
+
 		if(response.count == 1){ // means we have a known member
+
 			console.log('known member');
 			done(null, response.data[0]);
+
 		} else { //means unknown member
-			console.log('unknown user, creating a new one');
-			// TODO : post new member and give callback done w/ it
-			done();
+
+			console.log('unknown member, creating a new one');
+			
+			var newMember = JSON.stringify({
+				provider : "twitter",
+				uid : profile.id,
+				name : profile.displayName,
+				username : profile.username,
+				image : profile._json.profile_image_url
+			});
+
+			var options = {
+                                host: 'local.host',
+				port: '3000',
+                                path: '/api/v1/members',
+                                method: 'POST',
+                                headers : {
+                 			'Content-Type': 'application/json',
+					'Content-Length': newMember.length
+                		}
+                        };
+			
+			var request = http.request(options, function(res){
+				var buffer='';
+				res.on('data', function(chunk){buffer += chunk;});
+				res.on('end', function(){
+					var response = JSON.parse(buffer);
+					console.log('created member');
+					done(null, response);
+				});
+			});
+
+			request.end(newMember);
+
 		}
 
 	});
 
-	console.log(res);
-
     }).end();
 
-
-
-   /* User.findOne({uid: profile.id}, function(err, user) {
-      if(user) {
-	console.log('known user');
-	console.log(user);
-        done(null, user);
-      } else {
-	console.log('unknown user, creating a new one');
-        var user = new User();
-        user.provider = "twitter";
-        user.uid = profile.id;
-        user.name = profile.displayName;
-        user.image = profile._json.profile_image_url;
-        user.save(function(err) {
-          if(err) { throw err; }
-	  console.log('created new user');
-	  console.log(user);
-          done(null, user);
-        });
-      }
-    });*/
   }
 ));
 
-passport.serializeUser(function(user, done) {
-  done(null, user.uid);
+//helper function (simplyfy http post requests)
+function parsePost(req, callback) {
+  var data = '';
+  req.on('data', function(chunk) {
+    data += chunk;
+  });
+  req.on('end', function() {
+    callback(data);
+  });
+}
+
+// session stuff
+passport.serializeUser(function(member, done) {
+  done(null, member.uid);
 });
 
 passport.deserializeUser(function(uid, done) {
-  User.findOne({uid: uid}, function (err, user) {
-    done(err, user);
+  
+  http.get("http://local.host:3000/api/v1/search/members?uid=" + uid, function(res) {
+        var buffer = '';
+        res.on('data', function(chunk){buffer += chunk;});
+        res.on('end', function(){
+
+                var response = JSON.parse(buffer);
+		var member = response.data[0];
+		if(member) {
+			done(null, member);
+		} else {
+			done(null, new Error("unable to find supposed known member"));
+		}
+
+	});
   });
+
 });
 
 // configure Express
