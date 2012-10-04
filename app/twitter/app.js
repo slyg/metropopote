@@ -8,12 +8,13 @@ var
 	passport = require('passport')
 	util = require('util')
 	TwitterStrategy = require('passport-twitter').Strategy
-	Schema = mongoose.Schema
+	Schema = mongoose.Schema,
+	host = "local.host",
+	port = "3000"
 ;
 
 // creating app
 var app = module.exports = express();
-
 
 // twitter credencials
 var TWITTER_CONSUMER_KEY = "cEEX9ZxFerB7SeGPhx3Hcw";
@@ -21,102 +22,77 @@ var TWITTER_CONSUMER_SECRET = "0sRjUGPdQQjcreGQvvk7KxmnaDTuSMb39E7QZod0TA";
 
 // twitter strategy middleware /!\ using local.host domain for twitter testing
 passport.use(new TwitterStrategy({
-    consumerKey: TWITTER_CONSUMER_KEY,
-    consumerSecret: TWITTER_CONSUMER_SECRET,
-    callbackURL: "http://local.host:3000/auth/twitter/callback"
-  },
-  function(token, tokenSecret, profile, done) {
+	consumerKey: TWITTER_CONSUMER_KEY,
+	consumerSecret: TWITTER_CONSUMER_SECRET,
+	callbackURL: "http://" + host + ":" + port + "/auth/twitter/callback"
+},
+function(token, tokenSecret, profile, done) {
 
-    http.get("http://local.host:3000/api/v1/search/members?uid=" + profile.id, function(res) {
-	var buffer = '';
-	res.on('data', function(chunk){buffer += chunk;});
-	res.on('end', function(){
-
-		var response = JSON.parse(buffer);
-
+    http.get("http://" + host + ":" + port + "/api/v1/search/members?uid=" + profile.id, function(res) {
+	
+	parsePost(res, function(response){
 		if(response.count == 1){ // means we have a known member
 
-			console.log('known member');
-			done(null, response.data[0]);
+                        console.log('known member');
+                        done(null, response.data[0]);
 
-		} else { //means unknown member
+                } else { //means unknown member
 
-			console.log('unknown member, creating a new one');
-			
-			var newMember = JSON.stringify({
-				provider : "twitter",
-				uid : profile.id,
-				name : profile.displayName,
-				username : profile.username,
-				image : profile._json.profile_image_url
-			});
+                        console.log('unknown member, creating a new one');
 
-			var options = {
-                                host: 'local.host',
-				port: '3000',
+                        var newMember = JSON.stringify({
+                                provider : "twitter",
+                                uid : profile.id,
+                                name : profile.displayName,
+                                username : profile.username,
+                                image : profile._json.profile_image_url
+                        });
+
+                        var options = {
+                                host: host,
+                                port: port,
                                 path: '/api/v1/members',
                                 method: 'POST',
                                 headers : {
-                 			'Content-Type': 'application/json',
-					'Content-Length': newMember.length
-                		}
+                                        'Content-Type': 'application/json',
+                                        'Content-Length': newMember.length
+                                }
                         };
-			
-			var request = http.request(options, function(res){
-				var buffer='';
-				res.on('data', function(chunk){buffer += chunk;});
-				res.on('end', function(){
-					var response = JSON.parse(buffer);
-					console.log('created member');
-					done(null, response);
-				});
-			});
 
-			request.end(newMember);
+                        http.request(options, function(res){
+                                parsePost(res, function(response){
+                                        console.log('created member');
+                                        done(null, response);
+                                });
+                        }).end(newMember);
 
-		}
-
+                }
 	});
 
     }).end();
 
-  }
-));
+}));
 
-//helper function (simplyfy http post requests)
-function parsePost(req, callback) {
-  var data = '';
-  req.on('data', function(chunk) {
-    data += chunk;
-  });
-  req.on('end', function() {
-    callback(data);
-  });
+//helper function (simplify http post requests)
+function parsePost(res, callback) {
+	var data = '';
+	res.on('data', function(chunk) { data += chunk; });
+	res.on('end', function() { callback(JSON.parse(data)); });
 }
 
 // session stuff
-passport.serializeUser(function(member, done) {
-  done(null, member.uid);
-});
-
+passport.serializeUser(function(member, done) { done(null, member.uid); });
 passport.deserializeUser(function(uid, done) {
-  
-  http.get("http://local.host:3000/api/v1/search/members?uid=" + uid, function(res) {
-        var buffer = '';
-        res.on('data', function(chunk){buffer += chunk;});
-        res.on('end', function(){
-
-                var response = JSON.parse(buffer);
-		var member = response.data[0];
-		if(member) {
-			done(null, member);
-		} else {
-			done(null, new Error("unable to find supposed known member"));
-		}
-
+	http.get("http://" + host + ":" + port + "/api/v1/search/members?uid=" + uid, function(res) {
+		parsePost(res, function(response){
+               		var member = response.data[0];
+                	if(member) {
+                        	done(null, member);
+                	} else {
+                        	done(null, new Error("unable to find supposed known member"));
+                	}
+		});
 	});
-  });
-
 });
 
 // configure Express
@@ -141,30 +117,31 @@ app.configure('development', function(){
 
 // routing
 app.get('/', function(req, res){
-  res.render('home.html', { user: req.user, route : app.route, cache: false });
+	res.render('home.html', { user: req.user, route : app.route, cache: false });
 });
 
 app.get('/auth/twitter',
-  passport.authenticate('twitter'),
-  function(req, res){
-    // The request will be redirected to Twitter for authentication, so this
-    // function will not be called.
-  });
+	passport.authenticate('twitter'),
+	function(req, res){
+  		// The request will be redirected to Twitter for authentication, so this function will not be called.
+	});
 
 app.get('/auth/twitter/callback', 
-  passport.authenticate('twitter', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
+	passport.authenticate('twitter', { failureRedirect: '/login' }),
+	function(req, res) {
+		res.redirect('/');
+	}
+);
 
 app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
+	req.logout();
+	res.redirect('/');
 });
 
+// routing authentication check
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/');
+	if (req.isAuthenticated()) { return next(); }
+	res.redirect('/');
 }
 
 if (!module.parent) {
