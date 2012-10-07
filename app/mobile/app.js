@@ -133,7 +133,7 @@ app.get('/auth/twitter/callback',
 	}
 );
 
-app.get('/home', function(req, res){
+app.get('/home', ensureAuthenticated, function(req, res){
         res.render('login.html', { user: req.user, route : app.route });
 });
 
