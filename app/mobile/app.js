@@ -10,20 +10,12 @@ var
 	conf = require('../../conf'),
 	TwitterStrategy = require('passport-twitter').Strategy,
 	Schema = mongoose.Schema,
-	host = "local.host",
-	port = "3000"
+	host = conf.app.host,
+	port = conf.app.port
 ;
-
-console.log('###########');
-console.log(conf.app.auth_check);
-console.log('###########');
 
 // creating app
 var app = module.exports = express();
-
-// twitter credencials
-var TWITTER_CONSUMER_KEY = "cEEX9ZxFerB7SeGPhx3Hcw";
-var TWITTER_CONSUMER_SECRET = "0sRjUGPdQQjcreGQvvk7KxmnaDTuSMb39E7QZod0TA";
 
 // twitter strategy middleware /!\ using local.host domain for twitter testing
 passport.use(new TwitterStrategy({
