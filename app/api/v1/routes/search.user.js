@@ -19,6 +19,7 @@ module.exports = function(app){
 		var query = req.query;
 		if(query.limit) delete query.limit;
 		if(query.offset) delete query.offset;
+		if(query.app_auth_check) delete query.app_auth_check;
 	
 		User.find(query).limit().limit(limit).skip(offset*limit).exec(function (err, users) {
 

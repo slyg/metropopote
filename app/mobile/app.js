@@ -4,14 +4,19 @@ var
 	express = require('express'),
 	cons = require('consolidate'),
 	swig = require('swig'),
-	mongoose = require('mongoose')
-	passport = require('passport')
-	util = require('util')
-	TwitterStrategy = require('passport-twitter').Strategy
+	mongoose = require('mongoose'),
+	passport = require('passport'),
+	util = require('util'),
+	conf = require('../../conf'),
+	TwitterStrategy = require('passport-twitter').Strategy,
 	Schema = mongoose.Schema,
 	host = "local.host",
 	port = "3000"
 ;
+
+console.log('###########');
+console.log(conf.app.auth_check);
+console.log('###########');
 
 // creating app
 var app = module.exports = express();
@@ -22,13 +27,13 @@ var TWITTER_CONSUMER_SECRET = "0sRjUGPdQQjcreGQvvk7KxmnaDTuSMb39E7QZod0TA";
 
 // twitter strategy middleware /!\ using local.host domain for twitter testing
 passport.use(new TwitterStrategy({
-	consumerKey: TWITTER_CONSUMER_KEY,
-	consumerSecret: TWITTER_CONSUMER_SECRET,
+	consumerKey: conf.twitter.consumerKey,
+	consumerSecret: conf.twitter.consumerSecret,
 	callbackURL: "http://" + host + ":" + port + "/auth/twitter/callback"
 },
 function(token, tokenSecret, profile, done) {
 
-    http.get("http://" + host + ":" + port + "/api/v1/search/users?uid=" + profile.id, function(res) {
+    http.get("http://" + host + ":" + port + "/api/v1/search/users?uid=" + profile.id + "&app_auth_check=" + conf.app.auth_check, function(res) {
 	
 	parsePost(res, function(response){
 		if(response.count == 1){ // means we have a known user
@@ -51,7 +56,7 @@ function(token, tokenSecret, profile, done) {
                         var options = {
                                 host: host,
                                 port: port,
-                                path: '/api/v1/users',
+                                path: '/api/v1/users?app_auth_check=' + conf.app.auth_check,
                                 method: 'POST',
                                 headers : {
                                         'Content-Type': 'application/json',
@@ -83,7 +88,7 @@ function parsePost(res, callback) {
 // session stuff
 passport.serializeUser(function(user, done) { done(null, user.uid); });
 passport.deserializeUser(function(uid, done) {
-	http.get("http://" + host + ":" + port + "/api/v1/search/users?uid=" + uid, function(res) {
+	http.get("http://" + host + ":" + port + "/api/v1/search/users?uid=" + uid + "&app_auth_check=" + conf.app.auth_check, function(res) {
 		parsePost(res, function(response){
                		var user = response.data[0];
                 	if(user) {
