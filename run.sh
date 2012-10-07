@@ -7,7 +7,7 @@
 # Test if arguments are passed
 
 hasarg=0
-mongodbversion="1.8.2"
+mongodbversion="2.2.0"
 
 # tests if arguments
 if test $# = 0
