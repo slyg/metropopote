@@ -1,11 +1,5 @@
-mongoose-restful-api
+metropopote API
 ====================
-
-
-####API playground
-
-See /sandbox
-
 
 ####API endpoints
 <table>
@@ -28,6 +22,10 @@ See /sandbox
   <tr>
     <td>DELETE</td>
     <td>/api/v1/members/{MEMBER_ID}</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>/api/v1/search/members</td>
   </tr>
 </table>  
 
