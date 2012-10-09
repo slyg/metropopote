@@ -25,11 +25,10 @@ app.configure('production', function(){
 
 // Routes
 
-//app.get('/', function(req, res, next){ res.redirect('/login'); });
 app.use('/', require('./app/mobile/app'));
 app.use('/api', require('./app/api/v1/app'));
-app.use('/sandbox', require('./app/sandbox/app'));
-//app.use('/twitter', require('./app/twitter/app'));
+// /!\ swig cannot cohabit in several environnements so if you want to use sandbox, deactivate root '/'
+//app.use('/sandbox', require('./app/sandbox/app'));
 
 // Launch http server
 

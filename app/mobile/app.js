@@ -95,12 +95,12 @@ passport.deserializeUser(function(uid, done) {
 // configure Express
 app.configure(function() {
 	app.set('views', __dirname + '/views');
-	app.engine('html', cons.swig);
+        app.engine('html', cons.swig);	
 	app.use(express.logger());
 	app.use(express.cookieParser());
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
-	app.use(express.session({ secret: 'keyboard cat' }));
+	app.use(express.session({ secret: 'lamarck-caulincourt' }));
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(app.router);
@@ -109,7 +109,11 @@ app.configure(function() {
 
 app.configure('development', function(){
         app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-        swig.init({cache: false});
+	swig.init({ root: __dirname + '/views', allowErrors: true, cache: false });
+});
+
+app.configure('production', function(){
+        app.use(express.errorHandler());
 });
 
 // routing
@@ -134,7 +138,7 @@ app.get('/auth/twitter/callback',
 );
 
 app.get('/home', ensureAuthenticated, function(req, res){
-        res.render('login.html', { user: req.user, route : app.route });
+        res.render('home.html', { user: req.user, route : app.route });
 });
 
 app.get('/logout', function(req, res){
