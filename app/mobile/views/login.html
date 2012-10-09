@@ -1,10 +1,18 @@
 {% extends "layout.html" %}
 
-{% block title %}Connect via Twitter{% endblock %}
+{% block title %}Sign in with Twitter{% endblock %}
 
 {% block body %}
 <div class="pal">
-	<h2>Welcome! Please log in.</h2>
-	<a href="{{ route }}auth/twitter"><img src="{{ route }}sign-in-with-twitter-l.png" width="151" height="24" /></a>
+	<h2>Welcome! Please sign in.</h2>
+	{% if user %}
+        <p>
+		<sub>
+			It seems you are already connected under <a href="{{ route }}home">slyg</a> account, 
+			<a href="{{ route }}home">go ahead</a> or <a href="{{ route }}logout">logout</a>.
+		</sub>
+	</p>
+        {% endif %}
+	<p><a href="{{ route }}auth/twitter"><img src="{{ route }}sign-in-with-twitter-l.png" width="151" height="24" /></a></p>
 </div>
 {% endblock %}
