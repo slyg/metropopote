@@ -1,0 +1,37 @@
+	
+	/* helpers */
+		
+		h2 {text-align: center;}
+		
+		.tac {text-align: center;}
+		.tar {text-align: right;}
+		.ptm {padding-top: 10px;}
+		.flr {float:right; margin-right: 10px;}
+		.sf {font-size: 13px;}
+		.bf {font-size: 35px;}
+		.grayc {color: gray;}
+		.facebookColor {color: #3B5998;}
+		.twitterColor {color: #33ccff;}
+		.metroline {padding: 5px 10px; margin-left: 5px; background: #ccc; border-radius: 25px;}
+		.price {padding: 2px 6px; background-color: #333; color: #ddd; text-shadow: none; border-radius: 3px; font-weight: normal;}
+		.clearfix:after {content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+		.nolink {text-decoration: none;}
+	
+	/* page specific styles */	
+
+		#login {background: #000 url(/img/welcome-001.png) top center no-repeat; background-size:100% auto;}
+			#login form {margin-top: 20px; }
+			#login input {opacity: 0.7;}
+			#login a {color: #ccc; text-shadow: 0px 1px 1px #666;}
+			#login p {padding-bottom: 50px;}
+	
+		#logo {
+			font-family: 'Concert One', cursive;
+			font-size: 50px;
+			padding-top: 20px;
+			color: black;
+			text-shadow: 0px 0px 5px #666;
+			text-align: center;
+		}
+		
+		#popotes h3 {white-space:normal;}
