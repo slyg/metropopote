@@ -7,6 +7,7 @@
 		.tar {text-align: right;}
 		.ptm {padding-top: 10px;}
 		.flr {float:right; margin-right: 10px;}
+		.fll {float: left: margin-left: 10px;}
 		.sf {font-size: 13px;}
 		.bf {font-size: 35px;}
 		.grayc {color: gray;}
@@ -19,11 +20,10 @@
 	
 	/* page specific styles */	
 
-		#login {background: #000 url(/img/welcome-001.png) top center no-repeat; background-size:100% auto;}
-			#login form {margin-top: 20px; }
-			#login input {opacity: 0.7;}
-			#login a {color: #ccc; text-shadow: 0px 1px 1px #666;}
-			#login p {padding-bottom: 50px;}
+		#login form {margin-top: 20px; }
+		#login input {opacity: 0.7;}
+		#login a {color: #ccc; text-shadow: 0px 1px 1px #666;}
+		#login p {padding-bottom: 50px;}
 	
 		#logo {
 			font-family: 'Concert One', cursive;

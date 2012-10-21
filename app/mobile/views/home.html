@@ -3,14 +3,70 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-
-	<div class="pal">
-		<p>
-			<a href="/home">Home</a> | 
-			<a data-ajax="false" href="/logout">Log Out</a> | 
-			<img src="{{ user.image }}" width="16" height="16" style="vertical-align: text-top;" /> {{ user.username }}
-		</p>
-		<h2>Hello, {{ user.name }}.</h2>
+<div id="home" data-role="page" data-theme="a">	
+	
+	<div class="ui-bar ui-bar-a tac sf">
+		Welcome {{ user.username }} |<a href="/logout" data-ajax="false" data-mini="true" class="ui-btn ui-btn-right grayc">Sign out <i class="icon-signout"></i></a>
 	</div>
-
+	
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar" role="navigation" data-icon-pos="top">
+			<ul>
+				<li><a href="/home" class="{% if nav == 'home' %}ui-btn-active{% endif %}"><i style="font-size: 30px;" class="icon-home"></i></a></li>
+				<li><a href="/metrolines" class="{% if nav == 'search' %}ui-btn-active{% endif %}"><i style="font-size: 30px;" class="icon-search"></i></a></li>
+				<li><a href="/popote/new" class="{% if nav == 'create' %}ui-btn-active{% endif %}"><i style="font-size: 30px;" class="icon-pencil"></i></a></li>
+				<li><a href="/profile" class="{% if nav == 'profile' %}ui-btn-active{% endif %}"><i style="font-size: 30px;" class="icon-user"></i></a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div data-role="content">
+		<ul data-role="listview">
+			<li data-role="list-divider" role="heading">Les dernières popotes</li>
+			<li>
+				<a href="/popote">
+					<h3>Ratatouille riz curry</h3>
+					<p><i class="icon-map-marker"></i>Mairie du 18&egrave;me (12) / <i class="icon-time"></i>19h / <i class="icon-user"></i> Steph</p>
+					<div class="flr sf"><span class="price">4&euro;/portion</span></div>
+				</a>
+			</li>
+			<li>
+				<a href="/popote">
+					<h3>Pates au saumon</h3>
+					<p><i class="icon-map-marker"></i>Convention (12) / <i class="icon-time"></i>19h / <i class="icon-user"></i> Boubou</p>
+					<div class="flr sf"><span class="price">4.5&euro;/portion</span></div>
+				</a>
+			</li>
+			<li>
+				<a href="/popote">
+					<h3>Salade Tha&iuml;</h3>
+					<p><i class="icon-map-marker"></i>R&eacute;publique (3, 5, 8, 9 et 11) / <i class="icon-time"></i>19h / <i class="icon-user"></i> Marc0</p>
+					<div class="flr sf"><span class="price">3.5&euro;/portion</span></div>
+				</a>
+			</li>
+			<li>
+				<a href="/popote">
+					<h3>Ratatouille riz curry</h3>
+					<p><i class="icon-map-marker"></i>Mairie du 18&egrave;me (12) / <i class="icon-time"></i>19h / <i class="icon-user"></i> Steph</p>
+					<div class="flr sf"><span class="price">4&euro;/portion</span></div>
+				</a>
+			</li>
+			<li>
+				<a href="/popote">
+					<h3>Pates au saumon</h3>
+					<p><i class="icon-map-marker"></i>Convention (12) / <i class="icon-time"></i>19h / <i class="icon-user"></i> Boubou</p>
+					<div class="flr sf"><span class="price">4.5&euro;/portion</span></div>
+				</a>
+			</li>
+			<li>
+				<a href="/popote">
+					<h3>Salade Tha&iuml;</h3>
+					<p><i class="icon-map-marker"></i>R&eacute;publique (3, 5, 8, 9 et 11) / <i class="icon-time"></i>19h / <i class="icon-user"></i> Marc0</p>
+					<div class="flr sf"><span class="price">3.5&euro;/portion</span></div>
+				</a>
+			</li>
+		</ul>
+	</div>
+	
+</div>
 {% endblock %}
