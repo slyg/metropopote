@@ -11,7 +11,8 @@ var
 	TwitterStrategy = require('passport-twitter').Strategy,
 	Schema = mongoose.Schema,
 	host = conf.app.host,
-	port = conf.app.port
+	port = conf.app.port,
+	sessionUsers = {} // store current users
 ;
 
 // creating app
@@ -70,7 +71,7 @@ function(token, tokenSecret, profile, done) {
 
 }));
 
-//helper function (simplify http post requests)
+// helper function (simplify http post requests)
 function parsePost(res, callback) {
 	var data = '';
 	res.on('data', function(chunk) { data += chunk; });
@@ -78,18 +79,16 @@ function parsePost(res, callback) {
 }
 
 // session stuff
-passport.serializeUser(function(user, done) { done(null, user.uid); });
+passport.serializeUser(function(user, done) {
+	sessionUsers[user.uid] = user;
+	done(null, user.uid);
+});
 passport.deserializeUser(function(uid, done) {
-	http.get("http://" + host + ":" + port + "/api/v1/search/users?uid=" + uid + "&app_auth_check=" + conf.app.auth_check, function(res) {
-		parsePost(res, function(response){
-               		var user = response.data[0];
-                	if(user) {
-                        	done(null, user);
-                	} else {
-                        	done(null, new Error("unable to find supposed known user"));
-                	}
-		});
-	});
+	if(sessionUsers[uid]){
+		done(null, sessionUsers[uid]);
+	} else {
+		done(null, new Error("unable to find supposed known user"));
+	}
 });
 
 // configure Express
@@ -108,7 +107,7 @@ app.configure(function() {
 });
 
 app.configure('development', function(){
-        app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+        //app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 	swig.init({ root: __dirname + '/views', allowErrors: true, cache: false });
 });
 
