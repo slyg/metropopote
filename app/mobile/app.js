@@ -33,52 +33,54 @@
 	
 	    http.get("http://" + host + ":" + port + "/api/v1/search/users?uid=" + profile.id + "&app_auth_check=" + conf.app.auth_check, function(res) {
 		
-		parsePost(res, function(response){
-			if(response.count == 1){ // means we have a known user
-	
-	                        console.log('known user');
-	                        done(null, response.data[0]);
-	
-	                } else { //means unknown user
-	
-	                        console.log('unknown user, creating a new one');
-	
-	                        var newUser = JSON.stringify({
-	                                provider : "twitter",
-	                                uid : profile.id,
-	                                name : profile.displayName,
-	                                username : profile.username,
-	                                image : profile._json.profile_image_url
-	                        });
-	
-	                        var options = {
-	                                host: host,
-	                                port: port,
-	                                path: '/api/v1/users?app_auth_check=' + conf.app.auth_check,
-	                                method: 'POST',
-	                                headers : {
-	                                        'Content-Type': 'application/json',
-	                                        'Content-Length': newUser.length
-	                                }
-	                        };
-	
-	                        http.request(options, function(res){
-	                                parsePost(res, function(response){
-	                                        console.log('created user');
-	                                        done(null, response);
-	                                });
-	                        }).end(newUser);
-	
-	                }
-		});
+			parsePost(res, function(response){
+			
+				if(response.count == 1){ // means we have a known user
+		
+                        console.log('known user');
+                        done(null, response.data[0]);
+
+                } else { // means unknown user
+
+					console.log('unknown user, creating a new one');
+					
+					var newUser = JSON.stringify({
+					        provider : "twitter",
+					        uid : profile.id,
+					        name : profile.displayName,
+					        username : profile.username,
+					        image : profile._json.profile_image_url
+					});
+					
+					var options = {
+					        host: host,
+					        port: port,
+					        path: '/api/v1/users?app_auth_check=' + conf.app.auth_check,
+					        method: 'POST',
+					        headers : {
+					                'Content-Type': 'application/json',
+					                'Content-Length': newUser.length
+					        }
+					};
+					
+					http.request(options, function(res){
+					        parsePost(res, function(response){
+					                console.log('created user');
+					                done(null, response);
+					        });
+					}).end(newUser);
+
+                }
+                
+			});
 	
 	    }).end();
 	
 	}));
 
 
-// Helper function (to simplify http post requests)
-
+	// Helper function (to simplify http post requests)
+	
 	function parsePost(res, callback) {
 		var data = '';
 		res.on('data', function(chunk) { data += chunk; });
