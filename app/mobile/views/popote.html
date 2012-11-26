@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div id="popote" data-role="page" data-theme="a">
+
+	<div data-role="header">
+		<a href="/popotes" data-icon="arrow-l" data-rel="back">Retour</a>
+		<h1>R&eacute;server</h1>
+	</div>
+
+	<div data-role="content">
+		
+		<h2>Salade pommes roquette</h2>
+		
+		<p class="tar"><span class="price">3,5&euro;/portion</span></p>
+		
+		<table style="margin-left: 3px;">
+			<tr>
+				<td><i class="icon-time"></i></td>
+				<td>19h</td>
+			</tr>
+			<tr>
+				<td><i class="icon-calendar"></i></td>
+				<td>Jeudi 20 Mai</td>
+			</tr>
+			<tr>
+				<td><i class="icon-map-marker"></i></td>
+				<td>M&eacute;tro Lamarck-Caulaincourt</td>
+			</tr>
+			<tr>
+				<td><i class="icon-user"></i></td>
+				<td>Malika18</td>
+			</tr>
+		</table>
+		
+		<ul data-inset="true" data-role="listview">
+			<li data-role="list-divider" role="heading"><h3><i class="icon-leaf"></i> Ingr&eacute;dients</h3></li>
+			<li>
+				roquette<br />
+				pommes<br />
+				tomates cerises<br />
+				ma&iuml;s<br />
+				&eacute;mental<br />
+				vinaigre balsamique<br />
+				huile d'olive<br />
+				Sel, poivre<br />
+			</li>
+			<li data-role="list-divider" role="heading"><h3><i class="icon-comment"></i> Petite pr&eacute;cision</h3></li>
+			<li>Je me placerai pr&egrave;s du G20, dans le petit square. Soyez &agrave; l'heure svp ;) !</li>
+		</ul>
+		
+		<ul data-inset="true" data-role="listview">
+			<li data-role="list-divider" role="heading"><h3><i class="icon-user"></i> Les notes de Malika18</h3></li>
+			<li>D&eacute;ja&agrave; 3 distributions et 8 portions servies</li>
+			<li>
+				Note moyenne des pr&eacute;c&eacute;dentes distributions
+				<br />
+				<span class="bf">
+					<i class="icon-star"></i>
+					<i class="icon-star"></i>
+					<i class="icon-star"></i>
+					<i class="icon-star-empty"></i>
+					<i class="icon-star-empty"></i>
+				</span>
+			</li>
+		</ul>
+		<form method="post" action="/coupon/new" data-ajax="false">
+			<ul data-inset="true" data-role="listview">
+				<li data-role="list-divider" role="heading"><h3><i class="icon-ok"></i> Effectuer une r&eacute;servation</h3></li>
+				<li>
+					<span class="sf grayc">Nombre de portions</span>
+					<label for="slider-0">
+	   					<input type="range" name="slider-0" id="slider-0" value="2" min="1" max="20" />
+	   				</label>
+				</li>
+				<li>
+				   <button data-role="button" data-icon="star" data-theme="b">Je r&eacute;serve *</button>
+			    </li>
+			</ul>
+		</form>
+		<p class="sf grayc"><i class="icon-asterisk"></i> A l'exception de votre pr&eacute;nom, vos coordonn&eacute;es ne sont jamais communiqu&eacute;es au cuisinier.<br />Le paiement s'effectue en esp&egrave;ces sur le lieu de distribution.</p>
+		
+	</div>
+</div>
+
+{% endblock %}

@@ -21,7 +21,19 @@ module.exports = function(app, passport){
 	);
 	
 	app.get('/home', ensureAuthenticated, function(req, res){
-	        res.render('home.html', { user: req.user, route : app.route });
+	        res.render('home.html', { user: req.user, route : app.route, nav : 'home' });
+	});
+	
+	app.get('/metrolines', ensureAuthenticated, function(req, res){
+	        res.render('metrolines.html', { user: req.user, route : app.route });
+	});
+	
+	app.get('/popotes', ensureAuthenticated, function(req, res){
+	        res.render('popotes.html', { user: req.user, route : app.route });
+	});
+	
+	app.get('/popote', ensureAuthenticated, function(req, res){
+	        res.render('popote.html', { user: req.user, route : app.route });
 	});
 	
 	app.get('/logout', function(req, res){

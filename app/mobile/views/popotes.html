@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div id="popotes" data-role="page" data-theme="a">
+
+	<div data-role="header">
+		<a href="/metrolines" data-icon="arrow-l" data-rel="back">Retour</a>
+		<h1>Ligne 12</h1>
+	</div>
+
+	<div data-role="content">
+	
+		<ul data-role="listview" data-filter="true" data-filter-placeholder="filtrer les popotes">
+			<li data-role="list-divider" role="heading">Mairie du 18&egrave;me</li>
+			<li>
+				<a href="/popote">
+					<img src="/img/food-icon2.png" />
+					<h3>Ratatouille riz curry</h3>
+					<p><i class="icon-time"></i>19h / <i class="icon-user"></i> Steph</p>
+					<div class="flr sf"><span class="price">4&euro;/portion</span></div>
+				</a>
+			</li>
+			<li data-role="list-divider" role="heading">Lamarck-Caulaincourt</li>
+			<li>
+				<a href="/popote">
+					<img src="/img/food-icon.png" />
+					<h3>Salade C&eacute;sars</h3>
+					<p><i class="icon-time"></i>17h / <i class="icon-user"></i> Boubi</p>
+					<div class="flr sf"><span class="price">4&euro;/portion</span></div>
+				</a>
+			</li>
+			<li>
+				<a href="/popote">
+					<img src="/img/food-icon.png" />
+					<h3>Salade pommes roquette</h3>
+					<p><i class="icon-time"></i>19h / <i class="icon-user"></i> Malika18</p>
+					<div class="flr sf"><span class="price">3,5&euro;/portion</span></div>
+				</a>
+			</li>
+			<li data-role="list-divider" role="heading">Convention</li>
+			<li>
+				<a href="/popote">
+					<img src="/img/food-icon.png" />
+					<h3>Salade riz ananas</h3>
+					<p><i class="icon-time"></i>19h / <i class="icon-user"></i> Al3x</p>
+					<div class="flr sf"><span class="price">2&euro;/portion</span></div>
+				</a>
+			</li>
+			<li data-role="list-divider" role="heading">Mairie d'Issy</li>
+			<li>
+				<a href="/popote">
+					<img src="/img/food-icon2.png" />
+					<h3>Poulet tomates</h3>
+					<p><i class="icon-time"></i>18h30 / <i class="icon-user"></i> Goum&amp;</p>
+					<div class="flr sf"><span class="price">3&euro;/portion</span></div>
+				</a>
+			</li>
+		</ul>
+	
+	</div>
+
+</div>
+
+{% endblock %}
